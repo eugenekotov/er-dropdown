@@ -1,4 +1,4 @@
-import { A, NINE, SPACE, Z, ZERO } from '@angular/cdk/keycodes';
+import { A, ENTER, NINE, SPACE, Z, ZERO } from '@angular/cdk/keycodes';
 import { Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 import { MatSelect, MatSelectChange } from '@angular/material/select';
 import { debounceTime, Subject } from 'rxjs';
@@ -51,7 +51,10 @@ export class ErDropdownComponent<T> implements OnDestroy {
     }
 
     protected handleKeydown(event: any) {
-        console.log(event);
+        if (event.keyCode === ENTER && this.filteredOptions.length === 1) {
+            this.selectedOption = this.filteredOptions[0];
+            this.notifySelectionChange();
+        }
         if ((event.key && event.key.length === 1) ||
             (event.keyCode >= A && event.keyCode <= Z) ||
             (event.keyCode >= ZERO && event.keyCode <= NINE) ||
@@ -102,9 +105,11 @@ export class ErDropdownComponent<T> implements OnDestroy {
     protected onClearClick(event: any) {
         event.stopPropagation();
         this.selectedOption = undefined;
-        const event2 = new MatSelectChange(this.matSelect!, undefined);
-        this.onSelectionChange(event2);
+        this.notifySelectionChange();
+    }
 
+    private notifySelectionChange() {
+        this.onSelectionChange(new MatSelectChange(this.matSelect!, this.selectedOption));
     }
 
     protected onSelectionChange(event: MatSelectChange) {
