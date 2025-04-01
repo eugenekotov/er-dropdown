@@ -1,17 +1,31 @@
 <div style="border: 1px solid blue; padding: 10px;">
   Mat select example:
   <mat-form-field>
-      <mat-select>
-          @for (car of cars; track car) {
-              <mat-option [value]="car.name">{{car.name}}</mat-option>
-          }
-      </mat-select>
+    <mat-select>
+      @for (car of cars; track car) {
+      <mat-option [value]="car.name">{{car.name}}</mat-option>
+      }
+    </mat-select>
   </mat-form-field>
 
 </div>
 
 <div style="border: 1px solid green; padding: 10px;">
   Dropdown example:
-  <app-er-dropdown [options]="cars" optionLabel='name' [filter-threshold]='5'></app-er-dropdown>
+  <app-er-dropdown [options]="cars" optionLabel='name' [filter-threshold]='5' [(value)]="selectedCar"></app-er-dropdown>
 
+  selecte value: {{selectedCar?.name}}
+</div>
+
+<div style="border: 1px solid grey; padding: 10px; display: flex; flex-direction: column; gap: 20px;">
+  <div style="display: flex; gap: 10px;">
+    <label for="inputName">Name:</label>
+    <input id="inputName" type="text" [(ngModel)]="carName">
+    <label for="inputColor">Color:</label>
+    <input id="inputColor" type="text" [(ngModel)]="carColor">
+    <button (click)="onAddItemClick()">add item</button>
+  </div>
+  <div>
+  <button (click)="onRemoveItemClick()">remove current item</button>
+</div>
 </div>

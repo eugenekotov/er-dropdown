@@ -1,5 +1,6 @@
 import { A, NINE, SPACE, Z, ZERO } from '@angular/cdk/keycodes';
-import { Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
+import { MatSelect, MatSelectChange } from '@angular/material/select';
 import { debounceTime, Subject } from 'rxjs';
 
 @Component({
@@ -15,6 +16,12 @@ export class ErDropdownComponent<T> implements OnDestroy {
         this.updateFilterVisibility();
     }
     @Input() optionLabel!: keyof T;
+
+    // value
+    @Input() value: T | undefined;
+    @Output() valueChange = new EventEmitter<T | undefined>();
+
+
     @Input('filter-threshold')
     set filterThreshold(value: number) {
         this._filterThreshold = value;
@@ -23,6 +30,9 @@ export class ErDropdownComponent<T> implements OnDestroy {
     @Input('filter-place-holder') filterPlaceHolder: string = "Serach...";
     @Input() color: string | undefined = undefined;
 
+    @Output() selectionChange: EventEmitter<MatSelectChange> = new EventEmitter<MatSelectChange>();
+
+    @ViewChild('matSelect') matSelect: MatSelect | undefined;
     @ViewChild('input') input: ElementRef | undefined;
 
     private _options: T[] = [];
@@ -41,9 +51,9 @@ export class ErDropdownComponent<T> implements OnDestroy {
 
     protected handleKeydown(event: any) {
         if ((event.key && event.key.length === 1) ||
-                (event.keyCode >= A && event.keyCode <= Z) ||
-                (event.keyCode >= ZERO && event.keyCode <= NINE) ||
-                (event.keyCode === SPACE)) {
+            (event.keyCode >= A && event.keyCode <= Z) ||
+            (event.keyCode >= ZERO && event.keyCode <= NINE) ||
+            (event.keyCode === SPACE)) {
             event.stopPropagation();
         }
     }
@@ -71,7 +81,8 @@ export class ErDropdownComponent<T> implements OnDestroy {
     }
 
     private filterOptions(filterValue: string) {
-        this.filteredOptions = this._options.filter(option => (!filterValue || String(option[this.optionLabel]).includes(filterValue)));
+        const lowerCaseFilterValue = filterValue.toLowerCase();
+        this.filteredOptions = this._options.filter(option => (!filterValue || String(option[this.optionLabel]).toLowerCase().includes(lowerCaseFilterValue)));
     }
 
 
@@ -87,8 +98,18 @@ export class ErDropdownComponent<T> implements OnDestroy {
     }
 
     protected onClearClick(event: any) {
+        console.log(event);
         event.stopPropagation();
         this.selectedOption = undefined;
+        const event2 = new MatSelectChange(this.matSelect!, undefined);
+        this.onSelectionChange(event2);
+
+    }
+
+    protected onSelectionChange(event: MatSelectChange) {
+        console.log(event);
+        this.selectionChange.emit(event);
+        this.valueChange.emit(event.value);
     }
 
 }
