@@ -1,0 +1,52 @@
+.mat-filter {
+    position: sticky;
+    top: 0;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: grey;
+    z-index: 100;
+    font-size: inherit;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 16px 16px 16px 16px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    display: flex;
+    gap: 10px;
+    user-select: none;
+}
+
+.mat-mdc-select-panel {
+    max-height: 200px !important; /* Фіксуємо висоту списку */
+    overflow-y: scroll !important; /* Завжди показуємо прокрутку */
+}
+
+.mat-filter-input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    border: 0;
+    background-color: unset;
+    color: var(--mat-option-label-text-color);
+    font-size: var(--mat-option-label-text-size);
+    width: 100%;
+}
+
+$placeholderOpacity: 0.5;
+
+input::-webkit-input-placeholder {
+    opacity: $placeholderOpacity;
+}
+
+input::-moz-placeholder {
+    opacity: $placeholderOpacity;
+}
+
+input:-ms-input-placeholder {
+    opacity: $placeholderOpacity;
+}
+
+input:-moz-placeholder {
+    opacity: $placeholderOpacity;
+}
