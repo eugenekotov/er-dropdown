@@ -29,6 +29,7 @@ export class ErDropdownComponent<T> implements OnDestroy {
     }
     @Input('filter-place-holder') filterPlaceHolder: string = "Serach...";
     @Input() color: string | undefined = undefined;
+    @Input('show-clear') showClear: boolean = false;
 
     @Output() selectionChange: EventEmitter<MatSelectChange> = new EventEmitter<MatSelectChange>();
 
@@ -50,6 +51,7 @@ export class ErDropdownComponent<T> implements OnDestroy {
     }
 
     protected handleKeydown(event: any) {
+        console.log(event);
         if ((event.key && event.key.length === 1) ||
             (event.keyCode >= A && event.keyCode <= Z) ||
             (event.keyCode >= ZERO && event.keyCode <= NINE) ||
@@ -98,7 +100,6 @@ export class ErDropdownComponent<T> implements OnDestroy {
     }
 
     protected onClearClick(event: any) {
-        console.log(event);
         event.stopPropagation();
         this.selectedOption = undefined;
         const event2 = new MatSelectChange(this.matSelect!, undefined);
@@ -107,7 +108,6 @@ export class ErDropdownComponent<T> implements OnDestroy {
     }
 
     protected onSelectionChange(event: MatSelectChange) {
-        console.log(event);
         this.selectionChange.emit(event);
         this.valueChange.emit(event.value);
     }
