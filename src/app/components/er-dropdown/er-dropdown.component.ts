@@ -21,7 +21,6 @@ export class ErDropdownComponent<T> implements OnDestroy {
     @Input() value: T | undefined;
     @Output() valueChange = new EventEmitter<T | undefined>();
 
-
     @Input('filter-threshold')
     set filterThreshold(value: number) {
         this._filterThreshold = value;
@@ -33,7 +32,7 @@ export class ErDropdownComponent<T> implements OnDestroy {
 
     @Output() selectionChange: EventEmitter<MatSelectChange> = new EventEmitter<MatSelectChange>();
 
-    @ViewChild('matSelect') matSelect: MatSelect | undefined;
+    @ViewChild('matSelect') matSelect!: MatSelect;
     @ViewChild('input') input: ElementRef | undefined;
 
     private _options: T[] = [];
@@ -109,7 +108,7 @@ export class ErDropdownComponent<T> implements OnDestroy {
     }
 
     private notifySelectionChange() {
-        this.onSelectionChange(new MatSelectChange(this.matSelect!, this.selectedOption));
+        this.onSelectionChange(new MatSelectChange(this.matSelect, this.selectedOption));
     }
 
     protected onSelectionChange(event: MatSelectChange) {
