@@ -1,4 +1,4 @@
-<mat-form-field>
+<mat-form-field style="width: 100%;">
     <mat-select #matSelect (openedChange)="onOpenedChange($event)" [(ngModel)]="selectedOption" (selectionChange)="onSelectionChange($event)">
 
         <div *ngIf="filterVisible" class="mat-filter" [ngStyle]="{'background-color': color ? color : 'white'}">

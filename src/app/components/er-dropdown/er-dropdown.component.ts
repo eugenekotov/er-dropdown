@@ -21,14 +21,14 @@ export class ErDropdownComponent<T> implements OnDestroy {
     @Input() value: T | undefined;
     @Output() valueChange = new EventEmitter<T | undefined>();
 
-    @Input('filter-threshold')
+    @Input()
     set filterThreshold(value: number) {
         this._filterThreshold = value;
         this.updateFilterVisibility();
     }
-    @Input('filter-place-holder') filterPlaceHolder: string = "Serach...";
+    @Input() filterPlaceHolder: string = "Serach...";
     @Input() color: string | undefined = undefined;
-    @Input('show-clear') showClear: boolean = false;
+    @Input() showClear: boolean = false;
 
     @Output() selectionChange: EventEmitter<MatSelectChange> = new EventEmitter<MatSelectChange>();
 
