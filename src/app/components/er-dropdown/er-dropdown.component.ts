@@ -21,6 +21,8 @@ export class ErDropdownComponent<T> implements OnDestroy {
     @Input() value: T | undefined;
     @Output() valueChange = new EventEmitter<T | undefined>();
 
+    @Input() emptyItem: T | undefined;
+
     @Input()
     set filterThreshold(value: number) {
         this._filterThreshold = value;

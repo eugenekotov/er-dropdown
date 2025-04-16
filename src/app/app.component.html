@@ -13,9 +13,10 @@
 <div style="border: 1px solid green; padding: 10px;">
   Dropdown example:
   <app-er-dropdown
-    [options]="cars" optionLabel='name' [filterThreshold]='5'
+    [options]="cars" optionLabel='name' [emptyItem]="emptyItem"
+    [filterThreshold]='5'
     [(value)]="selectedCar"[showClear]="false"
-    style="margin-right: 20px; width: 400px;"></app-er-dropdown>
+    style="margin-right: 20px; width: 200px; display: inline-block"></app-er-dropdown>
 
   selecte value: {{selectedCar?.name}}
 </div>

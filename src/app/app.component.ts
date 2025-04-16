@@ -11,6 +11,10 @@ export class AppComponent {
   title = 'er-dropdown';
 
   cars: Car[] = [];
+  emptyItem: Car = {
+      name: '<unselect>',
+      color: ''
+  };
   selectedCar: Car | undefined;
   carName: string = "";
   carColor: string = "";
